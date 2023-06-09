@@ -18,5 +18,6 @@ test("Should not create a new memory with an empty description", async function(
     };
     const response = await axios.post("http://localhost:3000/memories", input);
     const output = response.data;
+    expect(response.status).toBe(422);
     expect(output.message).toBe("Invalid description");
 });
