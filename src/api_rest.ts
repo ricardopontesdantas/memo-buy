@@ -11,4 +11,11 @@ app.post("/memories", async function(request: Request, response: Response) {
         });
     }
 });
+
+type Memory = {
+    memoryId: string,
+    description: string,
+    done: boolean
+}
+
 app.listen(3000);
