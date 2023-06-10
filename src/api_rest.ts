@@ -20,6 +20,12 @@ app.post("/memories", async function(request: Request, response: Response) {
     }
 });
 
+app.put("/memories/:memoryId", async function(request: Request, response: Response) {
+    const memory = memories.find(memory => memory.memoryId === request.params.memoryId);
+    if (memory) memory.done = request.body.done;
+    return response.status(200).json(memory);
+});
+
 type Memory = {
     memoryId: string,
     description: string,
