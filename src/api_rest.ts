@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 const app = express();
 app.use(express.json())
+const memories: Memory[] = [];
 app.post("/memories", async function(request: Request, response: Response) {
     try {
         if (request.body.description === "") throw new Error("Invalid description");
