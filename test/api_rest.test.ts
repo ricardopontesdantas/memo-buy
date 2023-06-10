@@ -21,3 +21,19 @@ test("Should not create a new memory with an empty description", async function(
     expect(response.status).toBe(422);
     expect(output.message).toBe("Invalid description");
 });
+
+test("Should update status done with true if memory exists", async function() {
+    const memoryId = "63b0948a-f587-4a05-a1e3-48a83d160c1c";
+    const memory = {
+        memoryId,
+        description: "Buy something",
+        done: false
+    };
+    await axios.post("http://localhost:3000/memories", memory);
+    const input = {
+        done: true
+    };
+    const response = await axios.put(`http://localhost:3000/memories/${memoryId}`, input);
+    const output = response.data;
+    expect(output.done).toBe(true);
+});
