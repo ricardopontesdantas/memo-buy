@@ -34,7 +34,7 @@ test("Should update status done with true if memory exists", async function() {
     const input = {
         done: true
     };
-    const response = await axios.put(`http://localhost:3000/memories/${memoryId}`, input);
+    const response = await axios.patch(`http://localhost:3000/memories/${memoryId}/done`, input);
     const output = response.data;
     expect(output.done).toBe(true);
 });
