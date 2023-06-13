@@ -6,7 +6,7 @@ axios.defaults.validateStatus = function() {
 
 test("Should create a new memory", async function() {
     const input = {
-        memoryId: "ac37b140-8e74-4955-ac3f-55a8c253211f",
+        idMemory: "ac37b140-8e74-4955-ac3f-55a8c253211f",
         description: "Buy something"
     };
     const response = await axios.post("http://localhost:3000/memories", input);
@@ -24,9 +24,9 @@ test("Should not create a new memory with an empty description", async function(
 });
 
 test("Should update status done with true if memory exists", async function() {
-    const memoryId = "63b0948a-f587-4a05-a1e3-48a83d160c1c";
+    const idMemory = "63b0948a-f587-4a05-a1e3-48a83d160c1c";
     const memory = {
-        memoryId,
+        idMemory,
         description: "Buy something",
         done: false
     };
@@ -34,7 +34,7 @@ test("Should update status done with true if memory exists", async function() {
     const input = {
         done: true
     };
-    const response = await axios.patch(`http://localhost:3000/memories/${memoryId}/done`, input);
+    const response = await axios.patch(`http://localhost:3000/memories/${idMemory}/done`, input);
     const output = response.data;
     expect(output.done).toBe(true);
 });
