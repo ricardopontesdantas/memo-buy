@@ -2,7 +2,7 @@ export default class CreateMemory {
     async execute(input: Input): Promise<Output> {
         if (input.description === "") throw new Error("Invalid description");
         const memory = {
-            memoryId: input.memoryId,
+            idMemory: input.idMemory,
             description: input.description,
             done: false
         };
@@ -11,12 +11,12 @@ export default class CreateMemory {
 }
 
 type Input = {
-    memoryId: string,
+    idMemory: string,
     description: string
 }
 
 type Output = {
-    memoryId: string,
+    idMemory: string,
     description: string,
     done: boolean
 }
