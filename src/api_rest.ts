@@ -17,14 +17,14 @@ app.post("/memories", async function(request: Request, response: Response) {
     }
 });
 
-app.patch("/memories/:memoryId/done", async function(request: Request, response: Response) {
-    const memory = memories.find(memory => memory.memoryId === request.params.memoryId);
+app.patch("/memories/:idMemory/done", async function(request: Request, response: Response) {
+    const memory = memories.find(memory => memory.idMemory === request.params.idMemory);
     if (memory) memory.done = request.body.done;
     return response.status(200).json(memory);
 });
 
 type Memory = {
-    memoryId: string,
+    idMemory: string,
     description: string,
     done: boolean
 }
