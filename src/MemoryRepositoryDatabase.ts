@@ -16,9 +16,9 @@ export default class MemoryRepositoryDatabase implements MemoryRepository {
         return { idMemory: updatedMemory.id_memory, done: updatedMemory.done }
     }
 
-    async list(idUser: string): Promise<any[]> {
+    async listUndone(idUser: string, today: Date): Promise<any[]> {
         const connection = pgp()("postgres://docker:ignite@localhost:5432/local");
-        const memoriesData = await connection.query("select * from memobuy.memory where id_user = $1", [idUser]);
+        const memoriesData = await connection.query("select * from memobuy.memory where id_user = $1 and (done = false or extract(day from $2::timestamp - updated_at) <= 1)", [idUser, today]);
         connection.$pool.end();
         return memoriesData;
     }
