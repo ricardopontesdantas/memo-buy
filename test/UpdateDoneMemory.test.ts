@@ -1,0 +1,38 @@
+import CreateMemory from "../src/CreateMemory";
+import UpdateDoneMemory from "../src/UpdateDoneMemory";
+import crypto from "crypto";
+
+let createMemory: CreateMemory;
+let updateDoneMemory: UpdateDoneMemory;
+
+beforeEach(() => {
+    createMemory = new CreateMemory();
+    updateDoneMemory = new UpdateDoneMemory();
+});
+
+test("Should update a done memory with true", async function() {
+    const memory = {
+        idMemory: crypto.randomUUID(),
+        idUser: "fe103b13-e357-4c6c-9aaf-dbe671f18887",
+        description: "Buy something",
+        done: false,
+        date: new Date("2023-12-01T10:00:00")
+    };
+    await createMemory.execute(memory);
+    const updatedMemory = await updateDoneMemory.execute(memory.idMemory, true);
+    expect(updatedMemory.done).toBe(true);
+});
+
+test("Should update a done memory with false", async function() {
+    const memory = {
+        idMemory: crypto.randomUUID(),
+        idUser: "fe103b13-e357-4c6c-9aaf-dbe671f18887",
+        description: "Buy something",
+        done: false,
+        date: new Date("2023-12-01T10:00:00")
+    };
+    await createMemory.execute(memory);
+    await updateDoneMemory.execute(memory.idMemory, true);
+    const updatedMemory = await updateDoneMemory.execute(memory.idMemory, false);
+    expect(updatedMemory.done).toBe(false);
+});
