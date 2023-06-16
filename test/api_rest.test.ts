@@ -1,4 +1,5 @@
 import axios from "axios";
+import crypto from "crypto";
 
 axios.defaults.validateStatus = function() {
     return true;
@@ -6,14 +7,17 @@ axios.defaults.validateStatus = function() {
 
 test("Should create a new memory", async function() {
     const input = {
-        idMemory: "ac37b140-8e74-4955-ac3f-55a8c253211f",
-        description: "Buy something"
+        idMemory: crypto.randomUUID(),
+        idUser: "fe103b13-e357-4c6c-9aaf-dbe671f18887",
+        description: "Buy something",
+        done: false,
+        date: new Date("2023-12-01T10:00:00")
     };
     const response = await axios.post("http://localhost:3000/memories", input);
     expect(response.status).toBe(201);
 });
 
-test("Should not create a new memory with an empty description", async function() {
+test("Should not create a new memory with an invalid description", async function() {
     const input = {
         description: ""
     };
@@ -24,11 +28,13 @@ test("Should not create a new memory with an empty description", async function(
 });
 
 test("Should update status done with true if memory exists", async function() {
-    const idMemory = "63b0948a-f587-4a05-a1e3-48a83d160c1c";
+    const idMemory = crypto.randomUUID();
     const memory = {
         idMemory,
+        idUser: "fe103b13-e357-4c6c-9aaf-dbe671f18887",
         description: "Buy something",
-        done: false
+        done: false,
+        date: new Date("2023-12-01T10:00:00")
     };
     await axios.post("http://localhost:3000/memories", memory);
     const input = {
@@ -37,4 +43,5 @@ test("Should update status done with true if memory exists", async function() {
     const response = await axios.patch(`http://localhost:3000/memories/${idMemory}/done`, input);
     const output = response.data;
     expect(output.done).toBe(true);
+    expect(output.idMemory).toBe(idMemory);
 });
