@@ -10,7 +10,8 @@ export default class MemoryRepositoryDatabase implements MemoryRepository {
 
     async updateDone(idMemory: string, done: boolean): Promise<any> {
         const connection = pgp()("postgres://docker:ignite@localhost:5432/local");
-        await connection.query("update memobuy.memory set done = $1 where id_memory = $2", [done, idMemory]);
+        const updatedAt = done === true ? "current_timestamp" : null;
+        await connection.query(`update memobuy.memory set done = $1, updated_at = ${updatedAt} where id_memory = $2`, [done, idMemory]);
         const [updatedMemory] = await connection.query("select * from memobuy.memory where id_memory = $1", [idMemory]);
         connection.$pool.end();
         return { idMemory: updatedMemory.id_memory, done: updatedMemory.done }
