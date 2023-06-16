@@ -1,5 +1,7 @@
+import sinon from "sinon";
 import GetUndoneMemories from "../src/GetUndoneMemories";
 import { MemoryRepository } from "../src/MemoryRepository";
+import MemoryRepositoryDatabase from "../src/MemoryRepositoryDatabase";
 
 let getUndoneMemories: GetUndoneMemories;
 let memoryRepository: MemoryRepository;
@@ -31,7 +33,7 @@ beforeEach(() => {
             updated_at: null
         },
         {
-            id_memory: "8ba660ea-c266-4ef9-8120-565ed96c4623",
+            id_memory: "b6dd327e-606e-4067-b608-6ae56e2e1d91",
             id_user: "fe103b13-e357-4c6c-9aaf-dbe671f18887",
             description: "Buy four somethings",
             done: true, 
@@ -39,7 +41,7 @@ beforeEach(() => {
             updated_at: "2023-12-02T11:00:00"
         },
         {
-            id_memory: "8ba660ea-c266-4ef9-8120-565ed96c4623",
+            id_memory: "752aed9c-de2d-478d-9cfc-c9d7817b0450",
             id_user: "fe103b13-e357-4c6c-9aaf-dbe671f18887",
             description: "Buy five somethings",
             done: false, 
@@ -47,7 +49,7 @@ beforeEach(() => {
             updated_at: null
         },
         {
-            id_memory: "8ba660ea-c266-4ef9-8120-565ed96c4623",
+            id_memory: "ef5dcde9-9671-4146-935e-257c859ed306",
             id_user: "fe103b13-e357-4c6c-9aaf-dbe671f18887",
             description: "Buy six somethings",
             done: true, 
@@ -81,4 +83,15 @@ test("Should list undone memories using a fake", async function() {
     }
     const output = await getUndoneMemories.execute(input.idUser, input.today);
     expect(output).toHaveLength(5);
+});
+
+test("Should list undone memories using a stub", async function() {
+    const memoryRepositoryStub = sinon.stub(MemoryRepositoryDatabase.prototype, "listUndone").resolves([
+        { id_memory: "060a3604-98ff-4977-8065-45fd7e593cf7", id_user: "fe103b13-e357-4c6c-9aaf-dbe671f18887", description: "", done: false, created_at: "", update_at: null }
+    ]);
+    const getUndoneMemories = new GetUndoneMemories();
+    const idUser = "fe103b13-e357-4c6c-9aaf-dbe671f18887";
+    const output = await getUndoneMemories.execute(idUser, new Date());
+    expect(output.length).toBe(1);
+    memoryRepositoryStub.restore();
 });
