@@ -19,8 +19,8 @@ test("Should update a done memory with true", async function() {
         date: new Date("2023-12-01T10:00:00")
     };
     await createMemory.execute(memory);
-    const updatedMemory = await updateDoneMemory.execute(memory.idMemory, true);
-    expect(updatedMemory.done).toBe(true);
+    const output = await updateDoneMemory.execute(memory.idMemory, true);
+    expect(output.done).toBe(true);
 });
 
 test("Should update a done memory with false", async function() {
@@ -33,6 +33,6 @@ test("Should update a done memory with false", async function() {
     };
     await createMemory.execute(memory);
     await updateDoneMemory.execute(memory.idMemory, true);
-    const updatedMemory = await updateDoneMemory.execute(memory.idMemory, false);
-    expect(updatedMemory.done).toBe(false);
+    const output = await updateDoneMemory.execute(memory.idMemory, false);
+    expect(output.done).toBe(false);
 });
