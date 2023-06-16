@@ -1,22 +1,26 @@
+import MemoryRepositoryDatabase from "./MemoryRepositoryDatabase";
+import { MemoryRepository } from "./MemoryRepository";
+
 export default class CreateMemory {
-    async execute(input: Input): Promise<Output> {
+    constructor(readonly memoryRepository: MemoryRepository = new MemoryRepositoryDatabase()) {}
+
+    async execute(input: Input): Promise<void> {
         if (input.description === "") throw new Error("Invalid description");
         const memory = {
             idMemory: input.idMemory,
+            idUser: input.idUser,
             description: input.description,
-            done: false
+            done: input.done,
+            createdAt: input.date
         };
-        return memory;
+        await this.memoryRepository.save(memory);
     }
 }
 
 type Input = {
     idMemory: string,
-    description: string
-}
-
-type Output = {
-    idMemory: string,
+    idUser: string,
     description: string,
-    done: boolean
+    done: boolean,
+    date: Date
 }
