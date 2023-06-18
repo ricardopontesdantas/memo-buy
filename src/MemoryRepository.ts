@@ -1,5 +1,7 @@
+import Memory from "./Memory";
+
 export interface MemoryRepository {
-    save(memory: any): Promise<void>;
-    updateDone(idMemory: string, done: boolean): Promise<any>;
-    listUndone(idUser: string, today: Date): Promise<any[]>;
+    save(memory: Memory): Promise<void>;
+    updateDone(idMemory: string, done: boolean): Promise<Memory>;
+    listUndone(idUser: string, today: Date): Promise<Memory[]>;
 }
