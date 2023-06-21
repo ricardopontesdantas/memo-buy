@@ -2,11 +2,13 @@ import express, { Request, Response } from "express";
 import CreateMemory from "./CreateMemory";
 import UpdateDoneMemory from "./UpdateDoneMemory";
 import GetUndoneMemories from "./GetUndoneMemories";
+import DatabaseRepositoryFactory from "./DatabaseRepositoryFactory";
 const app = express();
 app.use(express.json())
 
 app.post("/memories", async function(request: Request, response: Response) {
-    const createMemory = new CreateMemory();
+    const repositoryFactory = new DatabaseRepositoryFactory();
+    const createMemory = new CreateMemory(repositoryFactory);
     try {
         await createMemory.execute(request.body);
         return response.status(201).end();
@@ -18,7 +20,8 @@ app.post("/memories", async function(request: Request, response: Response) {
 });
 
 app.patch("/memories/:idMemory/done", async function(request: Request, response: Response) {
-    const updateDoneMemory = new UpdateDoneMemory();
+    const repositoryFactory = new DatabaseRepositoryFactory();
+    const updateDoneMemory = new UpdateDoneMemory(repositoryFactory);
     try {
         const output = await updateDoneMemory.execute(request.params.idMemory, request.body.done);
         return response.status(200).json({
@@ -33,7 +36,8 @@ app.patch("/memories/:idMemory/done", async function(request: Request, response:
 });
 
 app.get("/memories/user/:idUser", async function(request: Request, response: Response) {
-    const getUndoneMemories = new GetUndoneMemories();
+    const repositoryFactory = new DatabaseRepositoryFactory();
+    const getUndoneMemories = new GetUndoneMemories(repositoryFactory);
     try {
         const output = await getUndoneMemories.execute(request.params.idUser, new Date());
         return response.status(200).json(output);
