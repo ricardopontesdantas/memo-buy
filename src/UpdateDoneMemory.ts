@@ -1,8 +1,12 @@
 import { MemoryRepository } from "./MemoryRepository";
-import MemoryRepositoryDatabase from "./MemoryRepositoryDatabase";
+import RepositoryFactory from "./RepositoryFactory";
 
 export default class UpdateDoneMemory {
-    constructor(readonly memoryRepository: MemoryRepository = new MemoryRepositoryDatabase()) {}
+    memoryRepository: MemoryRepository;
+
+    constructor(repositoryFactory: RepositoryFactory) {
+        this.memoryRepository = repositoryFactory.createMemoryRepository();
+    }
 
     async execute(idMemory: string, done: boolean): Promise<any> {
         return await this.memoryRepository.updateDone(idMemory, done);
