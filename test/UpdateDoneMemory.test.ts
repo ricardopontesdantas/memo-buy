@@ -1,4 +1,5 @@
 import CreateMemory from "../src/CreateMemory";
+import DatabaseRepositoryFactory from "../src/DatabaseRepositoryFactory";
 import UpdateDoneMemory from "../src/UpdateDoneMemory";
 import crypto from "crypto";
 
@@ -6,8 +7,9 @@ let createMemory: CreateMemory;
 let updateDoneMemory: UpdateDoneMemory;
 
 beforeEach(() => {
-    createMemory = new CreateMemory();
-    updateDoneMemory = new UpdateDoneMemory();
+    const repositoryFactory = new DatabaseRepositoryFactory();
+    createMemory = new CreateMemory(repositoryFactory);
+    updateDoneMemory = new UpdateDoneMemory(repositoryFactory);
 });
 
 test("Should update a done memory with true", async function() {
