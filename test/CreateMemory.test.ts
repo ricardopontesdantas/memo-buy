@@ -2,11 +2,13 @@ import sinon from "sinon";
 import CreateMemory from "../src/CreateMemory";
 import MemoryRepositoryDatabase from "../src/MemoryRepositoryDatabase";
 import crypto from "crypto";
+import DatabaseRepositoryFactory from "../src/DatabaseRepositoryFactory";
 
 let createMemory: CreateMemory;
 
 beforeEach(() => {
-    createMemory = new CreateMemory();
+    const repositoryFactory = new DatabaseRepositoryFactory();
+    createMemory = new CreateMemory(repositoryFactory);
 });
 
 test("Should create a new memory using a spy", async function() {
