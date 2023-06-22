@@ -1,8 +1,12 @@
 import { MemoryRepository } from "./MemoryRepository";
-import MemoryRepositoryDatabase from "./MemoryRepositoryDatabase";
+import RepositoryFactory from "./RepositoryFactory";
 
 export default class GetUndoneMemories {
-    constructor(readonly memoryRepository: MemoryRepository = new MemoryRepositoryDatabase()) {}
+    memoryRepository: MemoryRepository;
+
+    constructor(repositoryFactory: RepositoryFactory) {
+        this.memoryRepository = repositoryFactory.createMemoryRepository();
+    }
 
     async execute(idUser: string, today: Date): Promise<any> {
         return await this.memoryRepository.listUndone(idUser, today);
