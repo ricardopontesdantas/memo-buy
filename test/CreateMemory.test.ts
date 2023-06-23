@@ -3,11 +3,16 @@ import CreateMemory from "../src/CreateMemory";
 import MemoryRepositoryDatabase from "../src/MemoryRepositoryDatabase";
 import crypto from "crypto";
 import DatabaseRepositoryFactory from "../src/DatabaseRepositoryFactory";
+import PgPromiseAdapter from "../src/PgPromiseAdapter";
+import DatabaseConnection from "../src/DatabaseConnection";
 
 let createMemory: CreateMemory;
+let connection: DatabaseConnection;
 
-beforeEach(() => {
-    const repositoryFactory = new DatabaseRepositoryFactory();
+beforeEach(async () => {
+    connection = new PgPromiseAdapter();
+    await connection.connect();
+    const repositoryFactory = new DatabaseRepositoryFactory(connection);
     createMemory = new CreateMemory(repositoryFactory);
 });
 
@@ -34,4 +39,8 @@ test("Should not create a new memory with an empty description", async function(
         date: new Date("2023-12-01T10:00:00")
     };
     expect(() => createMemory.execute(input)).rejects.toThrow(new Error("Invalid description"));
+});
+
+afterEach(async () => {
+    await connection.close();
 });
