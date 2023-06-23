@@ -4,11 +4,16 @@ import { MemoryRepository } from "../src/MemoryRepository";
 import MemoryRepositoryDatabase from "../src/MemoryRepositoryDatabase";
 import Memory from "../src/Memory";
 import DatabaseRepositoryFactory from "../src/DatabaseRepositoryFactory";
+import PgPromiseAdapter from "../src/PgPromiseAdapter";
+import DatabaseConnection from "../src/DatabaseConnection";
 
 let getUndoneMemories: GetUndoneMemories;
+let connection: DatabaseConnection;
 
-beforeEach(() => {
-    const repositoryFactory = new DatabaseRepositoryFactory();
+beforeEach(async () => {
+    connection = new PgPromiseAdapter();
+    await connection.connect();
+    const repositoryFactory = new DatabaseRepositoryFactory(connection);
     getUndoneMemories = new GetUndoneMemories(repositoryFactory);
 });
 
@@ -20,4 +25,8 @@ test("Should list undone memories using a stub", async function() {
     const output = await getUndoneMemories.execute(idUser, new Date("2023-12-03T10:00:00"));
     expect(output.length).toBe(1);
     memoryRepositoryStub.restore();
+});
+
+afterEach(async () => {
+    await connection.close();
 });
