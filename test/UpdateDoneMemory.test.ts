@@ -1,13 +1,18 @@
 import CreateMemory from "../src/CreateMemory";
+import DatabaseConnection from "../src/DatabaseConnection";
 import DatabaseRepositoryFactory from "../src/DatabaseRepositoryFactory";
+import PgPromiseAdapter from "../src/PgPromiseAdapter";
 import UpdateDoneMemory from "../src/UpdateDoneMemory";
 import crypto from "crypto";
 
 let createMemory: CreateMemory;
 let updateDoneMemory: UpdateDoneMemory;
+let connection: DatabaseConnection;
 
-beforeEach(() => {
-    const repositoryFactory = new DatabaseRepositoryFactory();
+beforeEach(async () => {
+    connection = new PgPromiseAdapter();
+    await connection.connect();
+    const repositoryFactory = new DatabaseRepositoryFactory(connection);
     createMemory = new CreateMemory(repositoryFactory);
     updateDoneMemory = new UpdateDoneMemory(repositoryFactory);
 });
@@ -37,4 +42,8 @@ test("Should update a done memory with false", async function() {
     await updateDoneMemory.execute(memory.idMemory, true);
     const output = await updateDoneMemory.execute(memory.idMemory, false);
     expect(output.done).toBe(false);
+});
+
+afterEach(async () => {
+    await connection.close();
 });
