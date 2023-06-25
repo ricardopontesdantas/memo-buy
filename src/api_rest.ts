@@ -3,12 +3,18 @@ import CreateMemory from "./CreateMemory";
 import UpdateDoneMemory from "./UpdateDoneMemory";
 import GetUndoneMemories from "./GetUndoneMemories";
 import DatabaseRepositoryFactory from "./DatabaseRepositoryFactory";
+import PgPromiseAdapter from "./PgPromiseAdapter";
 const app = express();
 app.use(express.json())
 
-app.post("/memories", async function(request: Request, response: Response) {
-    const repositoryFactory = new DatabaseRepositoryFactory();
-    const createMemory = new CreateMemory(repositoryFactory);
+const connection = new PgPromiseAdapter();
+connection.connect();
+const repositoryFactory = new DatabaseRepositoryFactory(connection);
+const createMemory = new CreateMemory(repositoryFactory);
+const updateDoneMemory = new UpdateDoneMemory(repositoryFactory);
+const getUndoneMemories = new GetUndoneMemories(repositoryFactory);
+
+app.post("/memories", async function(request: Request, response: Response) {    
     try {
         await createMemory.execute(request.body);
         return response.status(201).end();
@@ -20,8 +26,6 @@ app.post("/memories", async function(request: Request, response: Response) {
 });
 
 app.patch("/memories/:idMemory/done", async function(request: Request, response: Response) {
-    const repositoryFactory = new DatabaseRepositoryFactory();
-    const updateDoneMemory = new UpdateDoneMemory(repositoryFactory);
     try {
         const output = await updateDoneMemory.execute(request.params.idMemory, request.body.done);
         return response.status(200).json({
@@ -36,8 +40,6 @@ app.patch("/memories/:idMemory/done", async function(request: Request, response:
 });
 
 app.get("/memories/user/:idUser", async function(request: Request, response: Response) {
-    const repositoryFactory = new DatabaseRepositoryFactory();
-    const getUndoneMemories = new GetUndoneMemories(repositoryFactory);
     try {
         const output = await getUndoneMemories.execute(request.params.idUser, new Date());
         return response.status(200).json(output);
