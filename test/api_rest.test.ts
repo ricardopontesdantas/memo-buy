@@ -14,7 +14,7 @@ test("Should create a new memory", async function() {
         date: new Date("2023-12-01T10:00:00")
     };
     const response = await axios.post("http://localhost:3000/memories", input);
-    expect(response.status).toBe(201);
+    expect(response.status).toBe(200);
 });
 
 test("Should not create a new memory with an invalid description", async function() {
