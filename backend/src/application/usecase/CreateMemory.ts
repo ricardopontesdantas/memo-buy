@@ -1,6 +1,6 @@
-import { MemoryRepository } from "./MemoryRepository";
-import Memory from "./Memory";
-import RepositoryFactory from "./RepositoryFactory";
+import { MemoryRepository } from "../repository/MemoryRepository";
+import Memory from "../../domain/entity/Memory";
+import RepositoryFactory from "../factory/RepositoryFactory";
 
 export default class CreateMemory {
     memoryRepository: MemoryRepository;

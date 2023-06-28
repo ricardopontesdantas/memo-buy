@@ -1,11 +1,11 @@
 import sinon from "sinon";
-import GetUndoneMemories from "../src/GetUndoneMemories";
-import { MemoryRepository } from "../src/MemoryRepository";
-import MemoryRepositoryDatabase from "../src/MemoryRepositoryDatabase";
-import Memory from "../src/Memory";
-import DatabaseRepositoryFactory from "../src/DatabaseRepositoryFactory";
-import PgPromiseAdapter from "../src/PgPromiseAdapter";
-import DatabaseConnection from "../src/DatabaseConnection";
+import GetUndoneMemories from "../../src/application/usecase/GetUndoneMemories";
+import { MemoryRepository } from "../../src/application/repository/MemoryRepository";
+import MemoryRepositoryDatabase from "../../src/infra/repository/MemoryRepositoryDatabase";
+import Memory from "../../src/domain/entity/Memory";
+import DatabaseRepositoryFactory from "../../src/infra/factory/DatabaseRepositoryFactory";
+import PgPromiseAdapter from "../../src/infra/database/PgPromiseAdapter";
+import DatabaseConnection from "../../src/infra/database/DatabaseConnection";
 
 let getUndoneMemories: GetUndoneMemories;
 let connection: DatabaseConnection;

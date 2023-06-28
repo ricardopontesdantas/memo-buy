@@ -1,6 +1,6 @@
-import { MemoryRepository } from "./MemoryRepository";
-import Memory from "./Memory";
-import DatabaseConnection from "./DatabaseConnection";
+import { MemoryRepository } from "../../application/repository/MemoryRepository";
+import Memory from "../../domain/entity/Memory";
+import DatabaseConnection from "../database/DatabaseConnection";
 
 export default class MemoryRepositoryDatabase implements MemoryRepository {
     constructor(readonly connection: DatabaseConnection) {}

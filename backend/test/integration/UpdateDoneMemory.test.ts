@@ -1,8 +1,8 @@
-import CreateMemory from "../src/CreateMemory";
-import DatabaseConnection from "../src/DatabaseConnection";
-import DatabaseRepositoryFactory from "../src/DatabaseRepositoryFactory";
-import PgPromiseAdapter from "../src/PgPromiseAdapter";
-import UpdateDoneMemory from "../src/UpdateDoneMemory";
+import CreateMemory from "../../src/application/usecase/CreateMemory";
+import DatabaseConnection from "../../src/infra/database/DatabaseConnection";
+import DatabaseRepositoryFactory from "../../src/infra/factory/DatabaseRepositoryFactory";
+import PgPromiseAdapter from "../../src/infra/database/PgPromiseAdapter";
+import UpdateDoneMemory from "../../src/application/usecase/UpdateDoneMemory";
 import crypto from "crypto";
 
 let createMemory: CreateMemory;

@@ -1,10 +1,10 @@
-import CreateMemory from "./CreateMemory";
-import UpdateDoneMemory from "./UpdateDoneMemory";
-import GetUndoneMemories from "./GetUndoneMemories";
-import DatabaseRepositoryFactory from "./DatabaseRepositoryFactory";
-import PgPromiseAdapter from "./PgPromiseAdapter";
-import ExpressAdapter from "./ExpressAdapter";
-import HttpController from "./HttpController";
+import CreateMemory from "./application/usecase/CreateMemory";
+import UpdateDoneMemory from "./application/usecase/UpdateDoneMemory";
+import GetUndoneMemories from "./application/usecase/GetUndoneMemories";
+import DatabaseRepositoryFactory from "./infra/factory/DatabaseRepositoryFactory";
+import PgPromiseAdapter from "./infra/database/PgPromiseAdapter";
+import ExpressAdapter from "./infra/http/ExpressAdapter";
+import HttpController from "./infra/http/HttpController";
 
 const connection = new PgPromiseAdapter();
 connection.connect();

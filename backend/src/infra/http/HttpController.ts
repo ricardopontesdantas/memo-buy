@@ -1,7 +1,7 @@
-import CreateMemory from "./CreateMemory";
-import GetUndoneMemories from "./GetUndoneMemories";
+import CreateMemory from "../../application/usecase/CreateMemory";
+import GetUndoneMemories from "../../application/usecase/GetUndoneMemories";
 import HttpServer from "./HttpServer";
-import UpdateDoneMemory from "./UpdateDoneMemory";
+import UpdateDoneMemory from "../../application/usecase/UpdateDoneMemory";
 
 export default class HttpController {
     constructor(readonly httpServer: HttpServer, readonly createMemory: CreateMemory, readonly updateDoneMemory: UpdateDoneMemory, getUndoneMemories: GetUndoneMemories) {

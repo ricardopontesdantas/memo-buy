@@ -1,5 +1,5 @@
-import { MemoryRepository } from "./MemoryRepository";
-import RepositoryFactory from "./RepositoryFactory";
+import { MemoryRepository } from "../repository/MemoryRepository";
+import RepositoryFactory from "../factory/RepositoryFactory";
 
 export default class GetUndoneMemories {
     memoryRepository: MemoryRepository;

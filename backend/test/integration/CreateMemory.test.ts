@@ -1,10 +1,10 @@
 import sinon from "sinon";
-import CreateMemory from "../src/CreateMemory";
-import MemoryRepositoryDatabase from "../src/MemoryRepositoryDatabase";
+import CreateMemory from "../../src/application/usecase/CreateMemory";
+import MemoryRepositoryDatabase from "../../src/infra/repository/MemoryRepositoryDatabase";
 import crypto from "crypto";
-import DatabaseRepositoryFactory from "../src/DatabaseRepositoryFactory";
-import PgPromiseAdapter from "../src/PgPromiseAdapter";
-import DatabaseConnection from "../src/DatabaseConnection";
+import DatabaseRepositoryFactory from "../../src/infra/factory/DatabaseRepositoryFactory";
+import PgPromiseAdapter from "../../src/infra/database/PgPromiseAdapter";
+import DatabaseConnection from "../../src/infra/database/DatabaseConnection";
 
 let createMemory: CreateMemory;
 let connection: DatabaseConnection;
